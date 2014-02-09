@@ -1,4 +1,5 @@
 #! /usr/bin/ruby
+#encoding: UTF-8
 
 require 'net/http' # to get html source
 
@@ -48,27 +49,41 @@ while pages.at(0)
       # for links from uploaded.net or ul.to
       regex_uploaded_net = /(uploaded\.net|ul\.to)/
       if (regex_uploaded_net.match current_download_address_string)
-        # todo: (1) solve redirect problem
-        #   Net::HTTP.get cannot handle "http://ul.to/mmp20ooz", but can handle "http://uploaded.net/file/mmp20ooz"
-        # todo: (2) solve cookie problem
-        #   Even if "http://uploaded.net/file/mmp20ooz" is open, the status is not logged in
-        uploaded_html_uri_object = URI(current_download_address_string)
+        # Get cookie by opening the html using Safari
+        #   So that after, e.g., "http://uploaded.net/file/mmp20ooz" is opened,
+        #   the status is logged in
+        system "osascript SaveHtmlPage.scpt 'current_download_address_string'"
+
+        # Wait until the previous progress gets done
+        system "sleep 15"
+        
+        # Read the data from the local html source code
+        temp_local_html_path = "file:///Users/congliu/Desktop/temp.html"
+        uploaded_html_uri_object = URI(temp_local_html_path)
         uploaded_html_source_string = Net::HTTP.get(uploaded_html_uri_object)
         # puts "uploaded html source string:\n#{uploaded_html_source_string}" # debug
         
-        premium_download_button_address_regex = /action=\"https?:\/\/[^\s"]+uploaded\.net[^\s"]+\"/
-        current_download_address_string = uploaded_html_source_string.scan(premium_download_button_address_regex).uniq.at(0)
+        # Read the data from the local html source code
+        File.open('/Users/congliu/Desktop/temp.html', 'r') do |file|
+          html_contents_string = file.read.force_encoding("ISO-8859-1").encode("utf-8", replace: nil)
+          current_download_address_string = html_contents_string.scan(/action=\"https?:\/\/[^\s"]+uploaded\.net[^\s"]+\"/).uniq.at(0)
+          
+          #file.each_line do |line|
+          #  current_download_address_string = line.scan(/action=\"https?:\/\/[^\s"]+uploaded\.net[^\s"]+\"/).uniq.at(0)
+          #end
+        end
+        current_download_address_string = current_download_address_string[8..-2]        
         # puts "This is the final download link: #{current_download_address_string}" # debug
       else
-        # Run download link in Google Chrome
+        # Run download link in Safari
         # to start download automatically
         # for files from k2s.cc and filepost.com
         puts current_download_address_string
-        system "/usr/bin/open -a '/Applications/Google Chrome.app' #{current_download_address_string}"
+        system "/usr/bin/open -a '/Applications/Safari.app' #{current_download_address_string}"
 
         # Wait for three seconds
         # so that as if this is done by a human
-        system "sleep 3"
+        system "sleep 10"
       end
     end
   end
