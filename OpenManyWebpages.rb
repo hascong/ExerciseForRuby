@@ -52,7 +52,7 @@ while pages.at(0)
         # Get cookie by opening the html using Safari
         #   So that after, e.g., "http://uploaded.net/file/mmp20ooz" is opened,
         #   the status is logged in
-        system "osascript SaveHtmlPage.scpt 'current_download_address_string'"
+        system "osascript /Users/congliu/Desktop/SaveHtmlPage.scpt #{current_download_address_string}"
 
         # Wait until the previous progress gets done
         system "sleep 15"
@@ -63,17 +63,26 @@ while pages.at(0)
           current_download_address_string = html_contents_string.scan(/action=\"https?:\/\/[^\s"]+uploaded\.net[^\s"]+\"/).uniq.at(0)
         end
         current_download_address_string = current_download_address_string[8..-2]        
-        # puts "This is the final download link: #{current_download_address_string}" # debug
+        puts current_download_address_string # debug
+
+        system "/usr/bin/open -a '/Applications/Safari.app' #{current_download_address_string}"
+
+        # Wait for a few seconds
+        # so that as if this is done by a human
+        system "sleep 10"
       else
         # Run download link in Safari
         # to start download automatically
         # for files from k2s.cc and filepost.com
-        puts current_download_address_string
-        system "/usr/bin/open -a '/Applications/Safari.app' #{current_download_address_string}"
 
-        # Wait for three seconds
+        puts current_download_address_string
+        system "osascript -e 'tell application \"safari\" to close every window'"
+        system "osascript /Users/congliu/Desktop/OpenWebpage.scpt #{current_download_address_string}"
+        # system "/usr/bin/open -a '/Applications/Safari.app' #{current_download_address_string}"
+
+        # Wait for a few seconds
         # so that as if this is done by a human
-        system "sleep 10"
+        system "sleep 2"
       end
     end
   end
