@@ -58,12 +58,6 @@ while pages.at(0)
         system "sleep 15"
         
         # Read the data from the local html source code
-        temp_local_html_path = "file:///Users/congliu/Desktop/temp.html"
-        uploaded_html_uri_object = URI(temp_local_html_path)
-        uploaded_html_source_string = Net::HTTP.get(uploaded_html_uri_object)
-        # puts "uploaded html source string:\n#{uploaded_html_source_string}" # debug
-        
-        # Read the data from the local html source code
         File.open('/Users/congliu/Desktop/temp.html', 'r') do |file|
           html_contents_string = file.read.force_encoding("ISO-8859-1").encode("utf-8", replace: nil)
           current_download_address_string = html_contents_string.scan(/action=\"https?:\/\/[^\s"]+uploaded\.net[^\s"]+\"/).uniq.at(0)
