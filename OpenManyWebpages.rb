@@ -67,10 +67,6 @@ while pages.at(0)
         File.open('/Users/congliu/Desktop/temp.html', 'r') do |file|
           html_contents_string = file.read.force_encoding("ISO-8859-1").encode("utf-8", replace: nil)
           current_download_address_string = html_contents_string.scan(/action=\"https?:\/\/[^\s"]+uploaded\.net[^\s"]+\"/).uniq.at(0)
-          
-          #file.each_line do |line|
-          #  current_download_address_string = line.scan(/action=\"https?:\/\/[^\s"]+uploaded\.net[^\s"]+\"/).uniq.at(0)
-          #end
         end
         current_download_address_string = current_download_address_string[8..-2]        
         # puts "This is the final download link: #{current_download_address_string}" # debug
