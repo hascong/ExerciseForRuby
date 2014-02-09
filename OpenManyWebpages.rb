@@ -29,8 +29,8 @@ while pages.at(0)
     # e.g. 'http://avaxhome.cc/ebooks/science_books/psychology_behavior/04957962120.html'
     url_stub = items_in_current_page.at(0)
     items_in_current_page.delete_at(0)
-    # html_uri_string_item = "#{DOMAIN}#{url_stub.to_s}"
-    html_uri_string_item = "http://avaxhome.cc/ebooks/ingrid-noll-hab-und-gier.html" # debug
+    html_uri_string_item = "#{DOMAIN}#{url_stub.to_s}"
+    # html_uri_string_item = "http://avaxhome.cc/ebooks/ingrid-noll-hab-und-gier.html" # debug
     # puts html_uri_string_item # debug
 
     html_uri_item = URI(html_uri_string_item)
