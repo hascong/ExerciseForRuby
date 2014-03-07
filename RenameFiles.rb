@@ -1,14 +1,22 @@
 #! /usr/bin/ruby
 #encoding: UTF-8
 
-folderPath = "/Users/congliu/Desktop/test/"
+puts "RenameFiles.rb starts working..."
+folderPath = "/Users/congliu/Downloads/"
 
 allOldFileNames = Dir.entries(folderPath).select {|f| !File.directory? f}
 
 allOldFileNames.each do |anOldFileName|
-  puts anOldFileName
-  aNewFileName = anOldFileName
-  aNewFileName.gsub(/ +/, "_")
-  puts aNewFileName
-  # system "mv #{folderPath}#{anOldFileName} #{folderPath}#{aNewFileName}"
+  puts "  Trying to rename a file with an old file name \"" + anOldFileName + "\""
+  aNewFileName = anOldFileName.dup
+  aNewFileName.gsub!(/ +/, "_")
+  puts "  Rename it as \"" + aNewFileName + "\""
+  puts ""
+  if aNewFileName.eql? anOldFileName 
+  else
+    system "mv \"#{folderPath}#{anOldFileName}\" \"#{folderPath}#{aNewFileName}\""
+    system "sleep 5"
+  end
 end
+
+puts "RenameFiles.rb gets job done."
