@@ -9,6 +9,7 @@ allOldFileNames = Dir.entries(folderPath).select {|f| !File.directory? f}
 allOldFileNames.each do |anOldFileName|
   puts "  Trying to rename a file with an old file name \"" + anOldFileName + "\""
   aNewFileName = anOldFileName.dup
+  # Replace all spaces with underscore
   aNewFileName.gsub!(/ +/, "_")
   puts "  Rename it as \"" + aNewFileName + "\""
   puts ""
