@@ -58,7 +58,7 @@ filesOfAllPages.each do |fileNameOfSomePageInString|
     
     # Count the number of checked words in the data file
     fileDataInString = IO.read("#{filePathInString}#{fileNameOfSomePageInString}")
-    numberOfCheckedWords = fileDataInString.scan(/\ c\n/m).size
+    numberOfCheckedWords = fileDataInString.scan(/\ +c\ *(\n|\Z)/).size # \Z means end of string, but before any final line terminator, in all match modes
     puts "    (2) The number of words checked = #{numberOfCheckedWords}"
     
     # Get the time and date of today
