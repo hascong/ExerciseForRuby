@@ -21,4 +21,9 @@ allOldFileNames.each do |anOldFileName|
 end
 
 puts "RenameFiles.rb gets done the job."
+<<<<<<< HEAD
+puts "linqing modified!"
 puts ""
+=======
+puts "lll"
+>>>>>>> a2ba2f72628226c63ecf07c4b5f043457025c80a

@@ -51,7 +51,7 @@ end
 # end
 
 puts "ReadFile.rb starts working..."
-folderPath = "/Users/congliu/"
+folderPath = "/Users/Qing/git/ExerciseForRuby/"
 
 # Read the file into a string
 vocabBankFile = File.open("#{folderPath}vocab_bank_fake_small", "r")
