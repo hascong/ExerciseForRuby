@@ -1,0 +1,26 @@
+#! /usr/bin/ruby
+#encoding: UTF-8  
+
+# Test case 1
+system "cat \"Test Case 1  The new word is a new head\n\""
+system "clear && ruby ReadFile.rb boy \"Little boy.\" >> test_result_read_file_rb"
+
+# Test case 2
+system "cat \"\nTest Case 2  The new word is behind current head\n\""
+system "clear && ruby ReadFile.rb goddd \"Goddd.\" >> test_result_read_file_rb"
+
+# Test case 3
+system "cat \"\nTest Case 3  The new word is equal to certain entry\n\""
+system "clear && ruby ReadFile.rb good \"Good to see you again.\" \"Good night baby.\" \"Good evening.\" >> test_result_read_file_rb"
+
+# Test case 4
+system "cat \"\nTest Case 4  The new word is behind the middle\n\""
+system "clear && ruby ReadFile.rb goooooood \"Goooooood.\" >> test_result_read_file_rb"
+
+# Test case 5
+system "cat \"\nTest Case 5  The new word is before tail\n\""
+system "clear && ruby ReadFile.rb hi \"Hi there.\" \"Hi I am John.\" >> test_result_read_file_rb"
+
+# Test case 6
+system "cat \"\nTest Case 6  The new word is behind current tail\n\""
+system "clear && ruby ReadFile.rb zip \"Zip!\" \"Zip up.\" >> test_result_read_file_rb"
