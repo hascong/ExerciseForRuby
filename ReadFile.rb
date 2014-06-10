@@ -64,12 +64,16 @@ allLines.gsub!(/\n  /, delimiter)
 allLines.gsub!(/$/, delimiter)
 allLines = allLines[0..-3] # Now allLines[-1] is "\n"
 
+puts "allLines is:"
+puts allLines
+puts ""
+
 # Split the whole string into entries
 allEntries = allLines.scan(/^.+$/)
 
-# puts "allEntries is:"
-# puts allEntries
-# puts ""
+puts "allEntries is:"
+puts allEntries
+puts ""
 
 # Split out the word and examples for each entry
 wordCount = 0
