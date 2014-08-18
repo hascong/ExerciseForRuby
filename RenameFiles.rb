@@ -10,6 +10,9 @@ allOldFileNames = Dir.entries(folderPath).select {|f| !File.directory? f}
 allOldFileNames.each do |anOldFileName|
   aNewFileName = anOldFileName.dup
   aNewFileName.gsub!(/ +/, "_")
+  aNewFileName.gsub!(/\.(\w+)$/, "CONG_LIU_S_MARK\\1")
+  aNewFileName.gsub!(/\./, "_")
+  aNewFileName.gsub!(/CONG_LIU_S_MARK/, ".")
   if aNewFileName.eql? anOldFileName
   else
     puts "  Renaming a file named \"" + anOldFileName + "\"..."
