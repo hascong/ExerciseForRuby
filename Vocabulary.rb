@@ -10,10 +10,6 @@ class Vocabulary
     vocabBankFile = File.open(filepath,"r")
     allLines = vocabBankFile.read
     vocabBankFile.close
-     	# read contents from file
-    vocabBankFile = File.open(filepath,"r")
-    allLines = vocabBankFile.read
-    vocabBankFile.close
     	# convert the whole string to entry arrays
     delimiter = "=="
     allLines.gsub!(/\n  /,delimiter)
@@ -23,37 +19,48 @@ class Vocabulary
     
     # Split out the word and examples for each entry
         @entries.map! do |anEntry|
+          # puts "anEntry in initialize function is #{anEntry}"
           # Copy an entry and add a new line character
           # Cut an entry into lines
           roughCut = anEntry.split(delimiter)
           
-          # Remove the trailing new line character
-          word = roughCut.first
-          
-          # Remove the word
-          examples = roughCut[1..-1]
-          
-          # Re-format this entry
-          anEntry = examples.insert(0, word) 
+          if(roughCut.empty?) then
+            anEntry = nil
+          else
+            # Remove the trailing new line character
+            word = roughCut.first
+            
+            # Remove the word
+            examples = roughCut[1..-1]
+            
+            # Re-format this entry
+            anEntry = examples.insert(0, word)
+          end
         end
+
+        @entries.compact!
+
   end
 
 public
   
   def search_word(word)
     indexInsert = @entries.insert_position(word)
-    if(@entries[indexInsert][0]==word) 
-       return  @entries[indexInsert].to_s
-    else
-       return "NOT FOUND"
-    end   
+    puts "searched word index is: #{indexInsert}"
+    if(@entries[indexInsert][0]!=nil)
+      if(@entries[indexInsert][0]==word) 
+         return  @entries[indexInsert].to_s
+      else
+         return "NOT FOUND"
+      end
+    end
   end
 
   def insert_word(word,examples)
       # puts "I am the method in class with para "+word +" and "+examples.to_s
       # Search for the index to insert for the new word
-    indexInsert = @entries.insert_position(word)-1
-    puts "the insert index is: "+indexInsert.to_s
+    indexInsert = @entries.insert_position(word)
+    puts "the insert index for word  "+ word + " is :"+indexInsert.to_s
     if(@entries[indexInsert][0]==word) then
         @entries[indexInsert]+= examples
     else
@@ -79,35 +86,42 @@ public
      vocabBankFileRevised.close  
     return @entries[indexInsert].to_s
   end
-
 end
   
 class Array
       
       def insert_position(val, low = 0, high = (length - 1))
           # return high if high < low
+          # puts "low is #{low} and high is #{high}"
           if (high.eql? low) then
               if (val < self[low][0]) then
+                  # puts "1"
                   low
-                  else
-                  low + 1
-              end
-              elsif (high.eql? (low + 1)) then
-              if (val < self[low][0]) then
-                  low
-                  elsif (val < self[high][0]) then
-                  high
-                  else
-                  high + 1
-              end
               else
+                  # puts "2"
+                  low
+              end
+          elsif (high.eql? (low + 1)) then
+              if (val < self[low][0]) then
+                  # puts "3"
+                    low
+              elsif (val < self[high][0]) then
+                    # puts "4"
+                    high-1
+              else
+                    # puts "5"
+                    high
+              end
+          else
               mid = (low + high) / 2 # (2 + 3) / 2 => 2
+              # puts "mid value is #{self[mid][0]}, comparing with value equal is #{val == self[mid][0]}"
               case
-                  when (val < self[mid][0]) then insert_position(val, low, mid - 1)
-                  when (val > self[mid][0]) then insert_position(val, mid + 1, high)
-                  else
+              when (val < self[mid][0]) then insert_position(val, low, mid - 1)
+              when (val > self[mid][0]) then insert_position(val, mid + 1, high)
+              else
+                  # puts "6"
                   mid
               end
-          end
+          end   
       end
   end
