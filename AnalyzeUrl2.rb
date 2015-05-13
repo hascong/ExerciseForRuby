@@ -8,7 +8,7 @@ File.open("/Users/congliu/Desktop/organic_analysis_1", 'w') { |fileOutput|
 folderPath = "/Users/congliu/Downloads/"
 
 # TASK: Set the file to the correct name (1).
-# NOTE: (1) Current job is about fingerprint data file (Nov 2014 to Apr 2015)
+# NOTE: (1) Current job is about organic data file (Nov 2014 to Dec 2014)
 filePath = "/Users/congliu/Downloads/tmp-1431069285-604800-554c6265d15e7_copy_2.csv"
 # TEST: If the file path has been correctly set
 # fileOutput.write "The file is set to #{filePath}"
