@@ -28,11 +28,11 @@ bankPatternsReferralUrl = Hash.new
 yearMonthDetailed = Hash({"2014-11" => Hash.new, "2014-12" => Hash.new, "2015-01" => Hash.new, "2015-02" => Hash.new, "2015-03" => Hash.new, "2015-04" => Hash.new}) 
 
 # TASK: Ignore the first line that is fields names
-line = fileInput.gets
+line = fileInput.gets.chop
 # TEST: If the first line is correctly retrieved
 # fileOutput.write "The first line is #{line}"
 
-while (line = fileInput.gets and counterLine < maxLine)
+while (line = fileInput.gets.chop and counterLine < maxLine)
     # TASK: Retrieve current line
     # TEST: If current line is correctly retrieved
     # fileOutput.write "Line #{counterLine}: #{line}"
