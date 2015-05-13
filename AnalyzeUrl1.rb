@@ -11,15 +11,15 @@ folderPath = "/Users/congliu/Downloads/"
 # NOTE: (1) Current job is about fingerprint data file (Nov 2014 to Apr 2015)
 filePath = "/Users/congliu/Downloads/tmp-1431312123-604800-555016fbeb839_copy_2.csv"
 # TEST: If the file path has been correctly set
-# fileOutput.write "The file is set to #{filePath}"
+puts "The file is set to #{filePath}"
 
 # TASK: Set the line counter to 1
 counterLine = 1
-maxLine = 1141762
+maxLine = 1141761
 # 1141762 lines for fingerprint all
 
 # TEST: If counterLine is set to 1
-# fileOutput.write "The line counter has been set to #{counterLine}"
+puts "The line counter has been set to #{counterLine}"
 
 fileInput = File.new(filePath, "r")
 keyValuePairs = Array.new
@@ -30,24 +30,24 @@ yearMonthDetailed = Hash({"2014-11" => Hash.new, "2014-12" => Hash.new, "2015-01
 # TASK: Ignore the first line that is fields names
 line = fileInput.gets.chop
 # TEST: If the first line is correctly retrieved
-# fileOutput.write "The first line is #{line}"
+puts "The first line is #{line}"
 
 while (line = fileInput.gets.chop and counterLine < maxLine)
     # TASK: Retrieve current line
     # TEST: If current line is correctly retrieved
-    # fileOutput.write "Line #{counterLine}: #{line}"
+    # puts "Line #{counterLine}=[#{line}]"
     
     # TASK: Duplicate current line
     lineDup = line.dup
     # TEST: If current line is correctly duplicated
-    # fileOutput.write "Line #{counterLine} duplicated: #{lineDup}"
+    # puts "Line #{counterLine} duplicated: #{lineDup}"
 
     # TASK: Retrieve referral_url from current line
     # NOTE: (2) After this statement, the value of lineDup is unexpected according to test results 
     referral_url = lineDup.gsub!(/"[^,]+,"Coupang\ Android",[^,]+,fingerprint,"?([^",]+)"?,[^,]+,[^,]+/, "\\1")
     # TEST: if referral_url is correctly retrieved
     if (referral_url)
-        # fileOutput.write "Line #{counterLine}'s referral_url: #{referral_url}"
+        # puts "Line #{counterLine}'s referral_url: #{referral_url}"
     end
 
     # TASK: Split referral_url as key-value pairs and put them into an array
@@ -56,7 +56,7 @@ while (line = fileInput.gets.chop and counterLine < maxLine)
     end
     # TEST: if key value pairs are correctly retrieved
     if (referral_url) 
-        # fileOutput.write "Line #{counterLine}'s referral_url's key-value pairs: #{keyValuePairs}"
+        # puts "Line #{counterLine}'s referral_url's key-value pairs: #{keyValuePairs}"
     end
 
     # TASK: Retrieve current referral_url pattern
@@ -65,7 +65,7 @@ while (line = fileInput.gets.chop and counterLine < maxLine)
     end
     # TEST: If current referral_url pattern is correctly retrieved
     if (referral_url)
-      # fileOutput.write "Line #{counterLine}'s referral_url's pattern: #{keyValuePairs}"
+        # puts "Line #{counterLine}'s referral_url's pattern: #{keyValuePairs}"
     end
     
     # TASK: Sort current referral_url pattern
@@ -74,7 +74,7 @@ while (line = fileInput.gets.chop and counterLine < maxLine)
     end
     # TEST: If current referral_url pattern is correctly sorted
     if (referral_url)
-      # fileOutput.write "Line #{counterLine}'s referral_url's pattern (sorted ascending): #{keyValuePairs}"
+        # puts "Line #{counterLine}'s referral_url's pattern (sorted ascending): #{keyValuePairs}"
     end
 
     # TASK: Increment the value of the current referral URL pattern as the key in the pattern bank
@@ -87,8 +87,8 @@ while (line = fileInput.gets.chop and counterLine < maxLine)
     end
     # TEST: If the pattern bank is updated correctly
     if (referral_url)
-        # fileOutput.write "The updated bankPatternsReferralUrl is:"
-        # fileOutput.write "#{bankPatternsReferralUrl}"
+        # puts "The updated bankPatternsReferralUrl is:"
+        # puts "#{bankPatternsReferralUrl}"
     end
 
     # TODO: Write results into output file
@@ -99,35 +99,33 @@ while (line = fileInput.gets.chop and counterLine < maxLine)
     # TASK: Get another duplicate of current line
     lineDup = line.dup
     # TEST: If this another duplicate of current line is correctly retrieved
-    # fileOutput.write "Line #{counterLine} duplicated: #{lineDup}"
+    # puts "Line #{counterLine} duplicated: #{lineDup}"
 
     # TASK: Retrieve YYYY-MM formatted year-month
     # NOTE: (3) After this statement, the value of lineDup is unexpected according to test results 
     yearMonth = lineDup.gsub!(/"(20\d\d-\d\d)[^,]+,"Coupang\ Android",[^,]+,fingerprint,([^,]+,|,)[^,]+,[^,]+/, "\\1")
     # TEST: if the year-month is correctly retrieved
     if (yearMonth)
-        # fileOutput.write "Line #{counterLine}'s year-month: #{yearMonth}"
-
+        # puts "Line #{counterLine}'s year-month:[#{yearMonth}]"
     end
-
+    
     # TASK: Increment the value of the current referral URL pattern as the key in the pattern bank
     if (referral_url and yearMonth)
-        # fileOutput.write yearMonthDetailed[yearMonth]
         if (yearMonthDetailed[yearMonth][keyValuePairs.join(",")])
-            yearMonthDetailed[yearMonth][keyValuePairs.join(",")] = bankPatternsReferralUrl[keyValuePairs.join(",")] + 1
+            yearMonthDetailed[yearMonth][keyValuePairs.join(",")] = yearMonthDetailed[yearMonth][keyValuePairs.join(",")] + 1
         else
             yearMonthDetailed[yearMonth][keyValuePairs.join(",")] = 1
         end
     end
     # TEST: If the pattern bank is updated correctly
     if (referral_url)
-        # fileOutput.write "The updated yearMonthDetailed[yearMonth] is:"
-        # fileOutput.write "#{yearMonthDetailed[yearMonth]}"
+        # puts "The updated yearMonthDetailed[yearMonth] is:"
+        # puts "#{yearMonthDetailed[yearMonth]}"
     end
     
     # Increment line number counterLine
     counterLine = counterLine + 1
-    # fileOutput.write ""
+    # puts ""
 end
 
 # Close input file
