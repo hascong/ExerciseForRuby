@@ -1,8 +1,9 @@
 #encoding: UTF-8
 
 # -----------------------------------------------------------------------------
+# Motivation   : To extend the parameter expansion in bash shell.
 # File name    : runCommandWithParameters.rb
-# Author       : Cong Liu
+# Author       : George Cong Liu
 # Updated      : Mon Jun 04 13:00 CST 2018
 # Usage        : $ ruby runCommandWithParameters.rb $COMMAND $PARAMETERS
 # Example      : $ ruby ./runCommandWithParameters.rb "pod repo remove" \
